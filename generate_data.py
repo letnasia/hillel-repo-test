@@ -1,11 +1,15 @@
 from peewee import fn
-from random import randint
+from random import randint, choice
 
-from db import Student, Mark
+from db import Student, Teacher, Mark
 
-for _ in range(1000):
-    # Get random student
-    student = Student.select().order_by(fn.Random()).get()
+students = Student.select()
+teachers = Teacher.select()
+
+for _ in range(100):
+    # Get random student and teacher
+    student = choice(students)
+    teacher = choice(teachers)
 
     # Generate mark
-    Mark.create(student=student, value=randint(60, 100))
+    Mark.create(student=student, teacher=teacher, value=randint(60, 100))
